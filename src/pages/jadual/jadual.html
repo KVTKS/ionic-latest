@@ -9,31 +9,20 @@
 
       <ion-content padding>
 
-        <ion-list *ngFor="let itemx of class_data">
-            <ion-item *ngIf="id_pen==itemx.id_pen" >
-              <ion-row>
-                <ion-col>
-                  {{itemx.slot}}
-                </ion-col>
-                <ion-col>
-                  {{itemx.hari}}
-                </ion-col>
-                <ion-col>
-                  {{itemx.bahagian}}
-                </ion-col>
-                <ion-col>
-                  {{itemx.subjek}}
-                </ion-col>
-              </ion-row>
-            </ion-item>
-        </ion-list>
-              <!-- <ion-label>Sesi</ion-label>
-              <ion-select [(ngModel)]="data" >
-                <div *ngFor="let timetable of jadual">
-                    <ion-option value="{{timetable.idj}}">{{timetable.sesi}}</ion-option>
-                </div>
-                
-              </ion-select>
-            </ion-item>
-          </ion-list> 
-      </ion-content> -->
+        <table>
+          <tr>
+            <th>Slot</th>
+            <th>Hari</th>
+            <th>Bahagian</th>
+            <th>Subjek</th>
+          </tr>
+          <tr *ngFor="let itemx of class_data">
+            <td>{{itemx.slot}}</td>
+            <td>{{itemx.hari}}</td>
+            <td>{{itemx.bhg}}</td>
+            <td>{{itemx.subjek}}</td>
+          </tr>
+          
+        </table>
+            
+      </ion-content>

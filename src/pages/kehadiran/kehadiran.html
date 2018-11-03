@@ -15,12 +15,10 @@
           <ion-list>
             <ion-item>
               <ion-label>Hari</ion-label>
-              <ion-select [(ngModel)]="hari">
-                <ion-option value="Monday">Isnin</ion-option>
-                <ion-option value="Tuesday">Selasa</ion-option>
-                <ion-option value="Wednesday">Rabu</ion-option>
-                <ion-option value="Thursday">Khamis</ion-option>
-                <ion-option value="Friday">Jumaat</ion-option>
+              <ion-select (ionChange)="setDay(data)"  [(ngModel)]="data">
+                <div *ngFor="let day of dayList">
+                  <ion-option value="{{day.value}}">{{day.name}}</ion-option>
+                </div>
               </ion-select>
             </ion-item>
           </ion-list>
@@ -28,7 +26,7 @@
          
 
           
-          <ion-list>
+          <!-- <ion-list>
             <ion-item>
               <ion-label>Sesi Kemasukan</ion-label>
               <ion-select (ionChange)="setSession(data)" [(ngModel)]="data" >
@@ -38,10 +36,10 @@
                 
               </ion-select>
             </ion-item>
-          </ion-list> 
+          </ion-list>  -->
 
     
-      <ion-list>
+      <!-- <ion-list>
       <ion-item *ngIf="classes">
         <ion-label>Kelas</ion-label>
         <ion-select (ionChange)="setClass(Kelas)" [(ngModel)]="Kelas">
@@ -61,10 +59,10 @@
             </div>
           </ion-select>
         </ion-item>
-      </ion-list>
+      </ion-list> -->
     
       <ion-list>
-        <ion-item>
+        <ion-item *ngIf="slots">
           <ion-label>Slot</ion-label>
           <ion-select (ionChange)="setSlot(Slot)" [(ngModel)]="Slot">
             <div *ngFor="let slot of slots">
@@ -82,12 +80,16 @@
        
       </ion-item>
     
-      <div *ngFor="let student of students">
+      <ion-list *ngFor="let student of students; let i=index">
         <ion-item> 
             <ion-label>{{student.nama_pelajar}}</ion-label>
-            <ion-toggle (click)="selectMember(student)" [(ngModel)]="student.checked"></ion-toggle> 
+            <ion-select (ionChange)="setAttendance(student.kehadiran, student.id_pelajar)"  [(ngModel)]="student.kehadiran" name="student.kehadiran">
+              <div *ngFor="let option of attendanceOptions">
+                <ion-option value="{{option.value }}"  [selected]="option.value == student.kehadiran">{{option.name}}</ion-option>
+              </div>
+            </ion-select> 
         </ion-item>
-      </div> 
+      </ion-list>
         <!-- <ion-item>
             <ion-label>Ikhmal</ion-label>
             <ion-checkbox color="dark" checked="true"></ion-checkbox>

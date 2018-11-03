@@ -19,16 +19,21 @@ export class KehadiranPage {
   userData :any;
 
   
-
+  bahagian:any;
   sessions:any;
   classes:any;
-  session:any;
+  attendanceOptions = [ 
+    {name : 'Hadir', value : '/'},
+    {name : 'Tidak Hadir', value : 'o'} ,
+    {name : 'Kebenaran', value : 'k'}
+  ];
+
   days:any;
   slots:any;
   students:any;
   selectedClass:any;
   selectedDay:any;
-  selectedSlot:any;
+  schedules:any;
   selectedDate :any;
   idJadual: any;
   Url: any;
@@ -37,7 +42,13 @@ export class KehadiranPage {
   Url4: any;
   Url5: any;
   Url6: any;
-
+  id_pen: any;
+  dayList = [
+    {name : 'Isnin', value : 'ISNIN'},
+    {name : 'Selasa', value : 'SELASA'} ,
+    {name : 'Rabu', value : 'RABU'},
+    {name : 'Khamis', value : 'KHAMIS'},
+    {name : 'Jumaat', value : 'JUMAAT'}];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http, public authService: AuthserviceProvider, public forgotCtrl: AlertController ){
   
@@ -58,70 +69,109 @@ export class KehadiranPage {
     });
 
     this.userData = JSON.parse(window.localStorage.getItem('userData'));
+    this.bahagian = this.userData.bahagian;
+    this.id_pen = this.userData.id_pengajar;
     console.log('username ',this.userData.id_pengajar);
     
   }
 
-
-  setSession(data) {
-    this.http.get(this.Url2+'/?id='+data+"&idp="+this.userData.id_pengajar)
-    .map(res => res.json())
-    .subscribe(data => {
-      this.classes = data;
-      console.log(data);
-    });
-    this.session = data;
-  }
-
-  onCancelSession(event) {
-    this.sessions = [];
-  }
-
-  setClass(data) {
-    this.http.get(this.Url3+'/?sesi='+this.session+"&kelas="+data)
-    .map(res => res.json())
-    .subscribe(data => {
-      this.days = data;
-      console.log(data);
-    });
-    this.selectedClass = data;
-    this.getPelajar();
-  }
-
   setDay(data) {
-    this.http.get(this.Url4+'/?sesi='+this.session+"&kelas="+this.selectedClass+"&hari="+data)
-    .map(res => res.json())
-    .subscribe(data => {
-      this.slots = data;
-      console.log(data);
-    });
-    this.selectedDay = data;
+    this.http.get(this.Url4+'?bahagian='+this.bahagian+"&id_pen="+this.id_pen+"&hari="+data)
+      .map(res => res.json())
+      .subscribe(data => {
+        this.slots = data;
+        console.log('after day selected: ',data);
+      });
+      // console.log(data);
   }
 
   setSlot(data) {
-    this.http.get(this.Url6+'/?sesi='+this.session+"&kelas="+this.selectedClass+"&hari="+this.selectedDay+"&slot="+data)
-    .map(res => res.json())
-    .subscribe(data => {
-      this.idJadual = data[0].idj;
-      console.log('id jadual ',data[0].idj);
+    // this.http.get(this.Url6+'/?sesi='+this.session+"&kelas="+this.selectedClass+"&hari="+this.selectedDay+"&slot="+data)
+    // .map(res => res.json())
+    // .subscribe(data => {
+    //   this.idJadual = data[0].idj;
+    //   console.log('id jadual ',data[0].idj);
+    // });
+    
+    this.schedules = this.slots.filter(x => {
+      return x.slot == data;
     });
-    this.selectedSlot = data;
-  }
-
-  getPelajar() {
-    this.http.get(this.Url5+'/?sesi='+this.session+"&kelas="+this.selectedClass)
-    .map(res => res.json())
-    .subscribe(data => {
-      this.students = data;
-      console.log('student ',data);
-
-    });
+    console.log('this schedule filtered ',  this.schedules);
+   
   }
 
   setDate(data) {
     this.selectedDate = data;
     console.log('date ', this.selectedDate);
+    this.getPelajar();
   }
+
+  getPelajar() {
+    //bahagian kelas sesi
+    const { bahagian, kelas, sesi } = this.schedules[0];
+
+    console.log(bahagian, kelas, sesi);
+    this.http.get(this.Url5+'?sesi='+sesi+'&kelas='+kelas+'&bahagian='+bahagian)
+    .map(res => res.json())
+    .subscribe(data => {
+      this.students = data;
+
+      this.students.forEach( (element, index) => {
+            this.students[index] = {...this.students[index], kehadiran : '/'};
+          });
+          
+      console.log('student ',this.students);
+    });
+  }
+
+  setAttendance(data, id_pelajar) {
+    console.log('datapelajar passed ', data);
+    // let filteredStudent = this.students.filter(student => {
+    //   return student.id_pelajar == id_pelajar;
+    // });
+    let studIndex = this.students.findIndex(obj => obj.id_pelajar == id_pelajar);
+    this.students[studIndex] = {...this.students[studIndex], kehadiran: data};
+
+    console.log('students, ' ,this.students);
+  }
+
+  // setSession(data) {
+  //   this.http.get(this.Url2+'/?id='+data+"&idp="+this.userData.id_pengajar)
+  //   .map(res => res.json())
+  //   .subscribe(data => {
+  //     this.classes = data;
+  //     console.log(data);
+  //   });
+  //   this.session = data;
+  // }
+
+  onCancelSession(event) {
+    this.sessions = [];
+  }
+
+  // setClass(data) {
+  //   this.http.get(this.Url3+'/?sesi='+this.session+"&kelas="+data)
+  //   .map(res => res.json())
+  //   .subscribe(data => {
+  //     this.days = data;
+  //     console.log(data);
+  //   });
+  //   this.selectedClass = data;
+  //   this.getPelajar();
+  // }
+
+  // setDay(data) {
+  //   this.http.get(this.Url4+'/?sesi='+this.session+"&kelas="+this.selectedClass+"&hari="+data)
+  //   .map(res => res.json())
+  //   .subscribe(data => {
+  //     this.slots = data;
+  //     console.log(data);
+  //   });
+  //   this.selectedDay = data;
+  // }
+
+
+
 
   selectMember(data){
     if (data.checked == true) {
@@ -139,8 +189,10 @@ export class KehadiranPage {
 
    submitAttendance() {
 
+    console.log('submit data ', this.schedules);
+    const { idj } = this.schedules[0];
     this.students.forEach( (element, index) => {
-      this.students[index] = {...this.students[index], date: this.selectedDate, idj: this.idJadual};
+      this.students[index] = {...this.students[index], date: this.selectedDate, idj};
     });
     
     this.authService.saveKehadiran(this.students).then(
@@ -153,12 +205,8 @@ export class KehadiranPage {
           buttons: ["OK"]
         });
         alert.present();
-
-      },
-      err => {
-        //Connection failed message
       }
-    );
+    ).catch(err => console.log(err));
    }
 
   ionViewDidLoad() {

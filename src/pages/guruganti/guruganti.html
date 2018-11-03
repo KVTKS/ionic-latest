@@ -15,7 +15,7 @@
         <ion-list>
             <ion-item>
               <ion-label>Pilih Pengajar</ion-label>
-              <ion-select [(ngModel)]="data" >
+              <ion-select (ionChange)="setpengajar(pen)" [(ngModel)]="pen" >
                 <div *ngFor="let teacher of pengajar">
                     <ion-option value="{{teacher.id_pengajar}}">{{teacher.nama_pengajar}}</ion-option>
                 </div>
@@ -23,4 +23,56 @@
               </ion-select>
             </ion-item>
           </ion-list> 
+          <ion-list>
+            <ion-item>
+              <ion-label>Hari</ion-label>
+              <ion-select (ionChange)="setDay(data)"  [(ngModel)]="data">
+                <div *ngFor="let day of dayList">
+                  <ion-option value="{{day.value}}">{{day.name}}</ion-option>
+                </div>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+           
+      <ion-list>
+        <ion-item *ngIf="slots">
+          <ion-label>Slot</ion-label>
+          <ion-select (ionChange)="setSlot(Slot)" [(ngModel)]="Slot">
+            <div *ngFor="let slot of slots">
+              <ion-option value="{{slot.slot}}">{{slot.slot}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    
+    
+      <ion-item>
+        <ion-label>Date</ion-label>
+        <ion-datetime (ionChange)="setDate(myDate)"  displayFormat="YYYY/MM/DD" [(ngModel)]="myDate"></ion-datetime>
+          <!-- <ion-datetime displayFormat="HH/MM/AA" [(ngModel)]="myDate"></ion-datetime> -->
+       
+      </ion-item>
+    
+      <ion-list *ngFor="let student of students; let i=index">
+        <ion-item> 
+            <ion-label>{{student.nama_pelajar}}</ion-label>
+            <ion-select (ionChange)="setAttendance(student.kehadiran, student.id_pelajar)"  [(ngModel)]="student.kehadiran" name="student.kehadiran">
+              <div *ngFor="let option of attendanceOptions">
+                <ion-option value="{{option.value }}"  [selected]="option.value == student.kehadiran">{{option.name}}</ion-option>
+              </div>
+            </ion-select> 
+        </ion-item>
+      </ion-list>
+        <!-- <ion-item>
+            <ion-label>Ikhmal</ion-label>
+            <ion-checkbox color="dark" checked="true"></ion-checkbox>
+          </ion-item>
+    
+          <ion-item>
+              <ion-label>Syafiqah</ion-label>
+              <ion-checkbox color="dark" checked="true"></ion-checkbox>
+            </ion-item> -->
+    
+  
+        <button ion-button color="secondary" round (click)="submitAttendance()">Hantar</button>
       </ion-content>
