@@ -72,6 +72,7 @@ userPelajar:any;
         this.userData = JSON.parse(window.localStorage.getItem('userData'));
         this.username=this.userData.nama_pengajar;
         this.userRole= this.userData.jwt;
+        console.log('userrole', this.userData);
       });
       
    

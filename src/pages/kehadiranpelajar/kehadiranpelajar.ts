@@ -21,6 +21,7 @@ export class KehadiranpelajarPage {
   id_pelajar:any;
   Url: any;
   attendances : any;
+  percentage: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http:Http, public authService: AuthserviceProvider, public forgotCtrl: AlertController) {
     this.userData = JSON.parse(window.localStorage.getItem('userPelajar'));
@@ -46,12 +47,15 @@ export class KehadiranpelajarPage {
     })
   }
 
-  changeAttendanceValue () {
-    this.attendances.forEach( (element, index) => {
+  async  changeAttendanceValue () {
+    let total = this.attendances.length;
+    let hadirCount = 0;
+    await this.attendances.forEach( (element, index) => {
       let tarikh = moment(element.tarikh).format("DD/MM/YYYY");
       switch(element.kehadiran) { 
         case "/": { 
           this.attendances[index] = {...this.attendances[index], kehadiran : 'Hadir', tarikh};
+          hadirCount += 1; 
            break; 
         } 
         case "o": { 
@@ -60,10 +64,14 @@ export class KehadiranpelajarPage {
         } 
         default: { 
           this.attendances[index] = {...this.attendances[index], kehadiran : 'Kebenaran', tarikh};
+          hadirCount += 1; 
            break; 
         } 
      } 
     });
+    let perc = hadirCount/total * 100;
+    this.percentage= perc.toFixed(2)
+    console.log(this.percentage);
   }
 
   ionViewDidLoad() {
