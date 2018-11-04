@@ -15,5 +15,17 @@ page-kehadiranpelajar {
         tr:nth-child(even) {
             background-color: #dddddd;
         }
+
+        ion-col {
+            border: 1px solid #3d71e2;
+            margin: 0;
+        }
+
+        ion-col:nth-child(even) {
+            background-color: #dddddd;
+            border: 1px solid #3d71e2;
+            margin: 0;
+        }
+
     
 }

@@ -24,36 +24,36 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col>
+      <ion-col col-2>
         Slot
       </ion-col>
-      <ion-col>
+      <ion-col col-2>
         Hari
       </ion-col>
-      <ion-col>
+      <ion-col col-3>
         Subjek
       </ion-col>
-      <ion-col>
+      <ion-col col-2>
         Kehadiran
       </ion-col>
-      <ion-col>
+      <ion-col col-3>
         Tarikh
       </ion-col>
     </ion-row>
     <ion-row *ngFor="let itemx of attendances">
-      <ion-col>
+      <ion-col col-2>
         {{itemx.slot}}
       </ion-col>
-      <ion-col>
+      <ion-col col-2>
         {{itemx.hari}}
       </ion-col>
-      <ion-col>
+      <ion-col col-3>
         {{itemx.subjek}}
       </ion-col>
-      <ion-col>
+      <ion-col col-2>
         {{itemx.kehadiran}}
       </ion-col>
-      <ion-col>
+      <ion-col col-3>
         {{itemx.tarikh}}
       </ion-col>
     </ion-row>
