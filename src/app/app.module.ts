@@ -25,6 +25,7 @@ import {KehadiranPage} from "../pages/kehadiran/kehadiran";
 import {JadualPage} from "../pages/jadual/jadual";
 import {PelajarPage} from "../pages/pelajar/pelajar";
 import {GurugantiPage} from "../pages/guruganti/guruganti";
+import { KehadiranpelajarPage } from "../pages/kehadiranpelajar/kehadiranpelajar";
 // import services
 // end import services
 // end import services
@@ -46,6 +47,7 @@ import {GurugantiPage} from "../pages/guruganti/guruganti";
     JadualPage,
     PelajarPage,
     GurugantiPage,
+    KehadiranpelajarPage
   ],
   imports: [
     BrowserModule,
@@ -74,6 +76,7 @@ import {GurugantiPage} from "../pages/guruganti/guruganti";
     JadualPage,
     PelajarPage,
     GurugantiPage,
+    KehadiranpelajarPage
   ],
   providers: [
     StatusBar,

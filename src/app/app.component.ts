@@ -15,7 +15,7 @@ import { KehadiranPage } from "../pages/kehadiran/kehadiran";
 import { JadualPage} from "../pages/jadual/jadual";
 import { PelajarPage} from "../pages/pelajar/pelajar";
 import { GurugantiPage } from "../pages/guruganti/guruganti";
-
+import { KehadiranpelajarPage } from "../pages/kehadiranpelajar/kehadiranpelajar";
 
 
 export interface MenuItem {
@@ -54,8 +54,8 @@ userPelajar:any;
  
       events.subscribe('user:pelajar',()=>{
         this.appMenuItems = [
-          {title: 'Home', component: HomePage, icon: 'home'},
-          {title: 'Kehadiran', component: KehadiranPage, icon: 'list'},
+          {title: 'Home', component: HomepelajarPage, icon: 'home'},
+          {title: 'Kehadiran', component: KehadiranpelajarPage, icon: 'list'},
         ];
         this.userData = JSON.parse(window.localStorage.getItem('userPelajar'));
         this.username=this.userData.nama_pelajar;
