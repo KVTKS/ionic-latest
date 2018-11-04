@@ -30,6 +30,7 @@ selectedDay:any;
 schedules:any;
 selectedDate :any;
 idJadual: any;
+validateAttendance: any;
 Url: any;
 Url2: any;
 Url3: any;
@@ -37,6 +38,7 @@ Url4: any;
 Url5: any;
 Url6: any;
 Url7: any;
+Url8: any;
 id_pen: any;
 dayList = [
   {name : 'Isnin', value : 'ISNIN'},
@@ -66,6 +68,7 @@ this.http.get(this.Url7)
     this.Url4 = this.authService.serverAPI + 'api/jadualSlot';
     this.Url5= this.authService.serverAPI + 'api/jadualPelajar';
     this.Url6 = this.authService.serverAPI +  'api/getJadualID'; 
+    this.Url8 = this.authService.serverAPI +  'api/kehadiran'; 
 }
 
 setpengajar(data) {
@@ -109,7 +112,33 @@ setDate(data) {
   this.selectedDate = data;
   console.log('date ', this.selectedDate);
   this.getPelajar();
+  this.validateKehadiran();
 }
+
+validateKehadiran() {
+  const { idj } = this.schedules[0];
+
+   this.http.get(this.Url8+'?idj='+idj+'&date='+this.selectedDate)
+   .map(res => res.json())
+   .subscribe(data => {
+     this.validateAttendance = data;
+
+     if(this.validateAttendance.length > 0) {
+       
+       this.students.forEach( (element, index) => {
+         let filtered = this.validateAttendance.filter(x => {
+           return x.id_pelajar == element.id_pelajar;
+         });
+         // console.log('filered ', filtered[0].kehadiran);
+
+           this.students[index] = {...this.students[index], kehadiran :  filtered[0].kehadiran};
+         });
+         
+     }
+     
+     console.log('validate ',this.validateAttendance);
+   });
+ }
 
 getPelajar() {
   //bahagian kelas sesi
@@ -121,9 +150,9 @@ getPelajar() {
   .subscribe(data => {
     this.students = data;
 
-    this.students.forEach( (element, index) => {
-          this.students[index] = {...this.students[index], kehadiran : '/'};
-        });
+    // this.students.forEach( (element, index) => {
+    //       this.students[index] = {...this.students[index], kehadiran : '/'};
+    //     });
         
     console.log('student ',this.students);
   });

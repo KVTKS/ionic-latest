@@ -71,7 +71,7 @@ export class KehadiranpelajarPage {
     });
     let perc = hadirCount/total * 100;
     this.percentage= perc.toFixed(2)
-    console.log(this.percentage);
+    console.log(this.attendances);
   }
 
   ionViewDidLoad() {

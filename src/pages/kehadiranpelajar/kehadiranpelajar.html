@@ -21,21 +21,41 @@
           <ion-label>{{percentage}}%</ion-label>
         </ion-item>
       </ion-list>
-  <table>
-    <tr>
-      <th>Slot</th>
-      <th>Hari</th>
-      <th>Subjek</th>
-      <th>Kehadiran</th>
-      <th>Tarikh</th>
-    </tr>
-    <tr *ngFor="let itemx of attendances">
-      <td>{{itemx.slot}}</td>
-      <td>{{itemx.hari}}</td>
-      <td>{{itemx.subjek}}</td>
-      <td>{{itemx.kehadiran}}</td>
-      <td>{{itemx.tarikh}}</td>
-    </tr>
-    
-  </table>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        Slot
+      </ion-col>
+      <ion-col>
+        Hari
+      </ion-col>
+      <ion-col>
+        Subjek
+      </ion-col>
+      <ion-col>
+        Kehadiran
+      </ion-col>
+      <ion-col>
+        Tarikh
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let itemx of attendances">
+      <ion-col>
+        {{itemx.slot}}
+      </ion-col>
+      <ion-col>
+        {{itemx.hari}}
+      </ion-col>
+      <ion-col>
+        {{itemx.subjek}}
+      </ion-col>
+      <ion-col>
+        {{itemx.kehadiran}}
+      </ion-col>
+      <ion-col>
+        {{itemx.tarikh}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
