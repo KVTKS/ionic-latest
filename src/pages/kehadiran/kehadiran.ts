@@ -130,9 +130,18 @@ export class KehadiranPage {
           });
           
       }
+      else {
+          this.initializeDefaultValue();
+      }
       
       console.log('validate ',this.validateAttendance);
     });
+  }
+
+  initializeDefaultValue() {
+    this.students.forEach( (element, index) => {
+        this.students[index] = {...this.students[index], kehadiran :  "/"};
+      });
   }
 
   getPelajar() {

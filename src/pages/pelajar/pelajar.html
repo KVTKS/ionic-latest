@@ -8,18 +8,29 @@
     </ion-header>
 
 <ion-content padding>
-  <div *ngFor= "let jadual of jaduals"> </div>
+
 
   <h2>Pelajar</h2>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Pilih Subjek</ion-label>
+      <ion-select (ionChange)="setSubject(subject)"  [(ngModel)]="subject">
+        <div *ngFor="let subject of subjects">
+          <ion-option value="{{subject.idsub}}">{{subject.subjek}}</ion-option>
+        </div>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 
   <table>
     <tr>
       <th>Nama</th>
-      <th>No NDP</th>
+      <th>Peratus</th>
     </tr>
-    <tr *ngFor="let pelajar of jaduals">
-      <td>{{pelajar.nama_pelajar}}</td>
-      <td>{{pelajar.no_ndp}}</td>
+    <tr *ngFor="let pelajar of groupedStudents">
+      <td>{{pelajar.nama}}</td>
+      <td [ngClass]="{'': pelajar.percentage > 80, 'red': pelajar.percentage < 80}">{{pelajar.percentage}}</td>
     </tr>
     
   </table>
